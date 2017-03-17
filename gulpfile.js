@@ -1,11 +1,12 @@
 /* global require */
-var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
-var sass = require('gulp-sass');
-var path = require('path');
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
+const sass = require('gulp-sass');
+const prefix = require('gulp-autoprefixer');
+const path = require('path');
 
 /* Change your directory and settings here */
-var settings = {
+const settings = {
     publicDir: '.',
     sassDir: 'scss',
     cssDir: 'assets/css'
@@ -32,7 +33,7 @@ gulp.task('serve', ['sass'], function() {
     /**
      * watch for changes in html files
      */
-    gulp.watch(settings.publicDir + "/*.html").on('change', browserSync.reload);;
+    gulp.watch(settings.publicDir + "/*.html").on('change', browserSync.reload);
 
 });
 
@@ -43,6 +44,7 @@ gulp.task('serve', ['sass'], function() {
 gulp.task('sass', function() {
     return gulp.src(settings.sassDir + "/**/*.scss")
         .pipe(sass().on('error', sass.logError))
+        //.pipe(prefix('last 2 version'))
         .pipe(gulp.dest(settings.cssDir))
         .pipe(browserSync.stream());
 });
